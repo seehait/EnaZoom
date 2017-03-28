@@ -29,7 +29,7 @@ class FrameExtractor: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     private let context = CIContext()
     private var captureDevice: AVCaptureDevice?
     private var filterStage = 0
-    private var filterList = ["none", "CIColorInvert", "CIColorPosterize"]
+    private var filterList = ["none", "CIColorInvert", "CIColorPosterize", "CIFalseColor0", "CIFalseColor1", "CIPhotoEffectNoir"]
     
     private var positionX = CGFloat(0)
     private var positionY = CGFloat(0)
@@ -121,15 +121,41 @@ class FrameExtractor: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         guard let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return nil }
         let ciImage = CIImage(cvPixelBuffer: imageBuffer)
         
-        var cgImage: CGImage
+        var cgImage: CGImage!
         
-        if (filterStage == 0) {
+        // Unsharp Mask
+        /*
+        let usmFilter = CIFilter(name: "CIUnsharpMask")
+        usmFilter!.setValue(ciImage, forKey: kCIInputImageKey)
+        cgImage = context.createCGImage(usmFilter!.value(forKey: kCIOutputImageKey) as! CIImage!, from: ciImage.extent)!
+         */
+        
+        switch (filterList[filterStage]) {
+        case "none":
             cgImage = context.createCGImage(ciImage, from: ciImage.extent)!
-        } else {
+            break
+        case "CIFalseColor0":
+            let filter = CIFilter(name: "CIFalseColor")
+            filter!.setValue(CIColor.blue(), forKey: "inputColor0")
+            filter!.setValue(CIColor.yellow(), forKey: "inputColor1")
+            filter!.setValue(ciImage, forKey: kCIInputImageKey)
+            
+            cgImage = context.createCGImage(filter!.value(forKey: kCIOutputImageKey) as! CIImage!, from: ciImage.extent)!
+            break
+        case "CIFalseColor1":
+            let filter = CIFilter(name: "CIFalseColor")
+            filter!.setValue(CIColor.yellow(), forKey: "inputColor0")
+            filter!.setValue(CIColor.blue(), forKey: "inputColor1")
+            filter!.setValue(ciImage, forKey: kCIInputImageKey)
+            
+            cgImage = context.createCGImage(filter!.value(forKey: kCIOutputImageKey) as! CIImage!, from: ciImage.extent)!
+            break
+        default:
             let filter = CIFilter(name: filterList[filterStage])
             filter!.setValue(ciImage, forKey: kCIInputImageKey)
             
             cgImage = context.createCGImage(filter!.value(forKey: kCIOutputImageKey) as! CIImage!, from: ciImage.extent)!
+            break
         }
         
         /*
