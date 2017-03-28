@@ -1,0 +1,537 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D5D01B391E8ABD8B00A1AF25 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D01B381E8ABD8B00A1AF25 /* AppDelegate.swift */; };
+		D5D01B3B1E8ABD8B00A1AF25 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D01B3A1E8ABD8B00A1AF25 /* ViewController.swift */; };
+		D5D01B3E1E8ABD8B00A1AF25 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5D01B3C1E8ABD8B00A1AF25 /* Main.storyboard */; };
+		D5D01B401E8ABD8B00A1AF25 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D5D01B3F1E8ABD8B00A1AF25 /* Assets.xcassets */; };
+		D5D01B431E8ABD8B00A1AF25 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5D01B411E8ABD8B00A1AF25 /* LaunchScreen.storyboard */; };
+		D5D01B4E1E8ABD8B00A1AF25 /* EnaZoomTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D01B4D1E8ABD8B00A1AF25 /* EnaZoomTests.swift */; };
+		D5D01B591E8ABD8B00A1AF25 /* EnaZoomUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D01B581E8ABD8B00A1AF25 /* EnaZoomUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D5D01B4A1E8ABD8B00A1AF25 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D5D01B2D1E8ABD8B00A1AF25 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D5D01B341E8ABD8B00A1AF25;
+			remoteInfo = EnaZoom;
+		};
+		D5D01B551E8ABD8B00A1AF25 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D5D01B2D1E8ABD8B00A1AF25 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D5D01B341E8ABD8B00A1AF25;
+			remoteInfo = EnaZoom;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		D5D01B351E8ABD8B00A1AF25 /* EnaZoom.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EnaZoom.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5D01B381E8ABD8B00A1AF25 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		D5D01B3A1E8ABD8B00A1AF25 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D5D01B3D1E8ABD8B00A1AF25 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		D5D01B3F1E8ABD8B00A1AF25 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D5D01B421E8ABD8B00A1AF25 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		D5D01B441E8ABD8B00A1AF25 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D5D01B491E8ABD8B00A1AF25 /* EnaZoomTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EnaZoomTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5D01B4D1E8ABD8B00A1AF25 /* EnaZoomTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnaZoomTests.swift; sourceTree = "<group>"; };
+		D5D01B4F1E8ABD8B00A1AF25 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D5D01B541E8ABD8B00A1AF25 /* EnaZoomUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EnaZoomUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5D01B581E8ABD8B00A1AF25 /* EnaZoomUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnaZoomUITests.swift; sourceTree = "<group>"; };
+		D5D01B5A1E8ABD8B00A1AF25 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D5D01B321E8ABD8B00A1AF25 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D5D01B461E8ABD8B00A1AF25 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D5D01B511E8ABD8B00A1AF25 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D5D01B2C1E8ABD8B00A1AF25 = {
+			isa = PBXGroup;
+			children = (
+				D5D01B371E8ABD8B00A1AF25 /* EnaZoom */,
+				D5D01B4C1E8ABD8B00A1AF25 /* EnaZoomTests */,
+				D5D01B571E8ABD8B00A1AF25 /* EnaZoomUITests */,
+				D5D01B361E8ABD8B00A1AF25 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D5D01B361E8ABD8B00A1AF25 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D5D01B351E8ABD8B00A1AF25 /* EnaZoom.app */,
+				D5D01B491E8ABD8B00A1AF25 /* EnaZoomTests.xctest */,
+				D5D01B541E8ABD8B00A1AF25 /* EnaZoomUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D5D01B371E8ABD8B00A1AF25 /* EnaZoom */ = {
+			isa = PBXGroup;
+			children = (
+				D5D01B381E8ABD8B00A1AF25 /* AppDelegate.swift */,
+				D5D01B3A1E8ABD8B00A1AF25 /* ViewController.swift */,
+				D5D01B3C1E8ABD8B00A1AF25 /* Main.storyboard */,
+				D5D01B3F1E8ABD8B00A1AF25 /* Assets.xcassets */,
+				D5D01B411E8ABD8B00A1AF25 /* LaunchScreen.storyboard */,
+				D5D01B441E8ABD8B00A1AF25 /* Info.plist */,
+			);
+			path = EnaZoom;
+			sourceTree = "<group>";
+		};
+		D5D01B4C1E8ABD8B00A1AF25 /* EnaZoomTests */ = {
+			isa = PBXGroup;
+			children = (
+				D5D01B4D1E8ABD8B00A1AF25 /* EnaZoomTests.swift */,
+				D5D01B4F1E8ABD8B00A1AF25 /* Info.plist */,
+			);
+			path = EnaZoomTests;
+			sourceTree = "<group>";
+		};
+		D5D01B571E8ABD8B00A1AF25 /* EnaZoomUITests */ = {
+			isa = PBXGroup;
+			children = (
+				D5D01B581E8ABD8B00A1AF25 /* EnaZoomUITests.swift */,
+				D5D01B5A1E8ABD8B00A1AF25 /* Info.plist */,
+			);
+			path = EnaZoomUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D5D01B341E8ABD8B00A1AF25 /* EnaZoom */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D5D01B5D1E8ABD8B00A1AF25 /* Build configuration list for PBXNativeTarget "EnaZoom" */;
+			buildPhases = (
+				D5D01B311E8ABD8B00A1AF25 /* Sources */,
+				D5D01B321E8ABD8B00A1AF25 /* Frameworks */,
+				D5D01B331E8ABD8B00A1AF25 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EnaZoom;
+			productName = EnaZoom;
+			productReference = D5D01B351E8ABD8B00A1AF25 /* EnaZoom.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D5D01B481E8ABD8B00A1AF25 /* EnaZoomTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D5D01B601E8ABD8B00A1AF25 /* Build configuration list for PBXNativeTarget "EnaZoomTests" */;
+			buildPhases = (
+				D5D01B451E8ABD8B00A1AF25 /* Sources */,
+				D5D01B461E8ABD8B00A1AF25 /* Frameworks */,
+				D5D01B471E8ABD8B00A1AF25 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D5D01B4B1E8ABD8B00A1AF25 /* PBXTargetDependency */,
+			);
+			name = EnaZoomTests;
+			productName = EnaZoomTests;
+			productReference = D5D01B491E8ABD8B00A1AF25 /* EnaZoomTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		D5D01B531E8ABD8B00A1AF25 /* EnaZoomUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D5D01B631E8ABD8B00A1AF25 /* Build configuration list for PBXNativeTarget "EnaZoomUITests" */;
+			buildPhases = (
+				D5D01B501E8ABD8B00A1AF25 /* Sources */,
+				D5D01B511E8ABD8B00A1AF25 /* Frameworks */,
+				D5D01B521E8ABD8B00A1AF25 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D5D01B561E8ABD8B00A1AF25 /* PBXTargetDependency */,
+			);
+			name = EnaZoomUITests;
+			productName = EnaZoomUITests;
+			productReference = D5D01B541E8ABD8B00A1AF25 /* EnaZoomUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D5D01B2D1E8ABD8B00A1AF25 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0820;
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "Seehait Chockthanyawat";
+				TargetAttributes = {
+					D5D01B341E8ABD8B00A1AF25 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 8B7VC7HV3L;
+						ProvisioningStyle = Automatic;
+					};
+					D5D01B481E8ABD8B00A1AF25 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 8B7VC7HV3L;
+						ProvisioningStyle = Automatic;
+						TestTargetID = D5D01B341E8ABD8B00A1AF25;
+					};
+					D5D01B531E8ABD8B00A1AF25 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 8B7VC7HV3L;
+						ProvisioningStyle = Automatic;
+						TestTargetID = D5D01B341E8ABD8B00A1AF25;
+					};
+				};
+			};
+			buildConfigurationList = D5D01B301E8ABD8B00A1AF25 /* Build configuration list for PBXProject "EnaZoom" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D5D01B2C1E8ABD8B00A1AF25;
+			productRefGroup = D5D01B361E8ABD8B00A1AF25 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D5D01B341E8ABD8B00A1AF25 /* EnaZoom */,
+				D5D01B481E8ABD8B00A1AF25 /* EnaZoomTests */,
+				D5D01B531E8ABD8B00A1AF25 /* EnaZoomUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D5D01B331E8ABD8B00A1AF25 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D5D01B431E8ABD8B00A1AF25 /* LaunchScreen.storyboard in Resources */,
+				D5D01B401E8ABD8B00A1AF25 /* Assets.xcassets in Resources */,
+				D5D01B3E1E8ABD8B00A1AF25 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D5D01B471E8ABD8B00A1AF25 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D5D01B521E8ABD8B00A1AF25 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D5D01B311E8ABD8B00A1AF25 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D5D01B3B1E8ABD8B00A1AF25 /* ViewController.swift in Sources */,
+				D5D01B391E8ABD8B00A1AF25 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D5D01B451E8ABD8B00A1AF25 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D5D01B4E1E8ABD8B00A1AF25 /* EnaZoomTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D5D01B501E8ABD8B00A1AF25 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D5D01B591E8ABD8B00A1AF25 /* EnaZoomUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D5D01B4B1E8ABD8B00A1AF25 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D5D01B341E8ABD8B00A1AF25 /* EnaZoom */;
+			targetProxy = D5D01B4A1E8ABD8B00A1AF25 /* PBXContainerItemProxy */;
+		};
+		D5D01B561E8ABD8B00A1AF25 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D5D01B341E8ABD8B00A1AF25 /* EnaZoom */;
+			targetProxy = D5D01B551E8ABD8B00A1AF25 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		D5D01B3C1E8ABD8B00A1AF25 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D5D01B3D1E8ABD8B00A1AF25 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		D5D01B411E8ABD8B00A1AF25 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D5D01B421E8ABD8B00A1AF25 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D5D01B5B1E8ABD8B00A1AF25 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D5D01B5C1E8ABD8B00A1AF25 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D5D01B5E1E8ABD8B00A1AF25 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 8B7VC7HV3L;
+				INFOPLIST_FILE = EnaZoom/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.enabler.project.EnaZoom;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		D5D01B5F1E8ABD8B00A1AF25 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 8B7VC7HV3L;
+				INFOPLIST_FILE = EnaZoom/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.enabler.project.EnaZoom;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		D5D01B611E8ABD8B00A1AF25 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 8B7VC7HV3L;
+				INFOPLIST_FILE = EnaZoomTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.enabler.project.EnaZoomTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EnaZoom.app/EnaZoom";
+			};
+			name = Debug;
+		};
+		D5D01B621E8ABD8B00A1AF25 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 8B7VC7HV3L;
+				INFOPLIST_FILE = EnaZoomTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.enabler.project.EnaZoomTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EnaZoom.app/EnaZoom";
+			};
+			name = Release;
+		};
+		D5D01B641E8ABD8B00A1AF25 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = 8B7VC7HV3L;
+				INFOPLIST_FILE = EnaZoomUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.enabler.project.EnaZoomUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = EnaZoom;
+			};
+			name = Debug;
+		};
+		D5D01B651E8ABD8B00A1AF25 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = 8B7VC7HV3L;
+				INFOPLIST_FILE = EnaZoomUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.enabler.project.EnaZoomUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = EnaZoom;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D5D01B301E8ABD8B00A1AF25 /* Build configuration list for PBXProject "EnaZoom" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D5D01B5B1E8ABD8B00A1AF25 /* Debug */,
+				D5D01B5C1E8ABD8B00A1AF25 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D5D01B5D1E8ABD8B00A1AF25 /* Build configuration list for PBXNativeTarget "EnaZoom" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D5D01B5E1E8ABD8B00A1AF25 /* Debug */,
+				D5D01B5F1E8ABD8B00A1AF25 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		D5D01B601E8ABD8B00A1AF25 /* Build configuration list for PBXNativeTarget "EnaZoomTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D5D01B611E8ABD8B00A1AF25 /* Debug */,
+				D5D01B621E8ABD8B00A1AF25 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		D5D01B631E8ABD8B00A1AF25 /* Build configuration list for PBXNativeTarget "EnaZoomUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D5D01B641E8ABD8B00A1AF25 /* Debug */,
+				D5D01B651E8ABD8B00A1AF25 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D5D01B2D1E8ABD8B00A1AF25 /* Project object */;
+}
