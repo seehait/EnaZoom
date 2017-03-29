@@ -13,16 +13,60 @@ protocol FrameExtractorDelegate: class {
     func captured(image: UIImage)
 }
 
+public extension UIDevice {
+    
+    var modelName: String {
+        var systemInfo = utsname()
+        uname(&systemInfo)
+        let machineMirror = Mirror(reflecting: systemInfo.machine)
+        let identifier = machineMirror.children.reduce("") { identifier, element in
+            guard let value = element.value as? Int8, value != 0 else { return identifier }
+            return identifier + String(UnicodeScalar(UInt8(value)))
+        }
+        
+        switch identifier {
+        case "iPod5,1":                                 return "iPod Touch 5"
+        case "iPod7,1":                                 return "iPod Touch 6"
+        case "iPhone3,1", "iPhone3,2", "iPhone3,3":     return "iPhone 4"
+        case "iPhone4,1":                               return "iPhone 4s"
+        case "iPhone5,1", "iPhone5,2":                  return "iPhone 5"
+        case "iPhone5,3", "iPhone5,4":                  return "iPhone 5c"
+        case "iPhone6,1", "iPhone6,2":                  return "iPhone 5s"
+        case "iPhone7,2":                               return "iPhone 6"
+        case "iPhone7,1":                               return "iPhone 6 Plus"
+        case "iPhone8,1":                               return "iPhone 6s"
+        case "iPhone8,2":                               return "iPhone 6s Plus"
+        case "iPhone9,1", "iPhone9,3":                  return "iPhone 7"
+        case "iPhone9,2", "iPhone9,4":                  return "iPhone 7 Plus"
+        case "iPhone8,4":                               return "iPhone SE"
+        case "iPad2,1", "iPad2,2", "iPad2,3", "iPad2,4":return "iPad 2"
+        case "iPad3,1", "iPad3,2", "iPad3,3":           return "iPad 3"
+        case "iPad3,4", "iPad3,5", "iPad3,6":           return "iPad 4"
+        case "iPad4,1", "iPad4,2", "iPad4,3":           return "iPad Air"
+        case "iPad5,3", "iPad5,4":                      return "iPad Air 2"
+        case "iPad2,5", "iPad2,6", "iPad2,7":           return "iPad Mini"
+        case "iPad4,4", "iPad4,5", "iPad4,6":           return "iPad Mini 2"
+        case "iPad4,7", "iPad4,8", "iPad4,9":           return "iPad Mini 3"
+        case "iPad5,1", "iPad5,2":                      return "iPad Mini 4"
+        case "iPad6,7", "iPad6,8":                      return "iPad Pro 12.9"
+        case "iPad6,3", "iPad6,4":                      return "iPad Pro 9.7"
+        case "AppleTV5,3":                              return "Apple TV"
+        case "i386", "x86_64":                          return "Simulator"
+        default:                                        return identifier
+        }
+    }
+}
+
 class FrameExtractor: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     
-    static let position = AVCaptureDevicePosition.back
-    static let quality = AVCaptureSessionPreset3840x2160
-    static let MAX_WIDTH = CGFloat(2160)
-    static let MAX_HEIGHT = CGFloat(3840)
+    static let POSITION = AVCaptureDevicePosition.back
+    static var QUALITY = AVCaptureSessionPreset3840x2160
+    static var MAX_WIDTH = CGFloat(2160)
+    static var MAX_HEIGHT = CGFloat(3840)
 
     static let MAX_ZOOM_FACTOR = 16.0
     static let MIN_ZOOM_FACTOR = 1.0
-    static let MAX_SCALE = 4.0
+    static var MAX_SCALE = 4.0
     static let MIN_SCALE = 1.0
     
     private var permissionGranted = false
@@ -43,6 +87,7 @@ class FrameExtractor: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     
     override init() {
         super.init()
+        initCameraResolution()
         calculatePosition()
         
         checkPermission()
@@ -64,6 +109,43 @@ class FrameExtractor: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
             }
             */
         }
+    }
+    
+    private func initCameraResolution() {
+        let modelName = UIDevice.current.modelName
+        switch modelName {
+        case "iPhone 4", "iPad 2":
+            FrameExtractor.QUALITY = AVCaptureSessionPreset1280x720
+            FrameExtractor.MAX_WIDTH = CGFloat(720)
+            FrameExtractor.MAX_HEIGHT = CGFloat(1280)
+            FrameExtractor.MAX_SCALE = 1
+            scale = 1
+            break;
+        case "iPhone 4s", "iPhone 5", "iPhone 5c", "iPhone 5s", "iPhone 6", "iPhone 6 Plus", "iPad 3", "iPad 4", "iPad Air", "iPad Air 2", "iPad Mini", "iPad Mini 2", "iPad Mini 3", "iPad Mini 4", "iPad Pro 12.9":
+            FrameExtractor.QUALITY = AVCaptureSessionPreset1920x1080
+            FrameExtractor.MAX_WIDTH = CGFloat(1080)
+            FrameExtractor.MAX_HEIGHT = CGFloat(1920)
+            FrameExtractor.MAX_SCALE = 2
+            scale = 2
+            break;
+        case "iPhone 6s", "iPhone 6s Plus", "iPhone 7", "iPhone 7 Plus", "iPhone SE", "iPad Pro 9.7":
+            FrameExtractor.QUALITY = AVCaptureSessionPreset3840x2160
+            FrameExtractor.MAX_WIDTH = CGFloat(2160)
+            FrameExtractor.MAX_HEIGHT = CGFloat(3840)
+            FrameExtractor.MAX_SCALE = 4
+            scale = 4
+            break;
+        default :
+            FrameExtractor.QUALITY = AVCaptureSessionPreset3840x2160
+            FrameExtractor.MAX_WIDTH = CGFloat(2160)
+            FrameExtractor.MAX_HEIGHT = CGFloat(3840)
+            FrameExtractor.MAX_SCALE = 4
+            scale = 4
+            break;
+        }
+        
+        print(FrameExtractor.QUALITY)
+        print(zoomFactor * (FrameExtractor.MAX_SCALE / scale), (FrameExtractor.MAX_SCALE / scale), zoomFactor)
     }
     
     // MARK: AVSession configuration
@@ -88,7 +170,7 @@ class FrameExtractor: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     
     private func configureSession() {
         guard permissionGranted else { return }
-        captureSession.sessionPreset = FrameExtractor.quality
+        captureSession.sessionPreset = FrameExtractor.QUALITY
         guard let captureDevice = selectCaptureDevice() else { return }
         self.captureDevice = captureDevice
         guard let captureDeviceInput = try? AVCaptureDeviceInput(device: captureDevice) else { return }
@@ -102,7 +184,7 @@ class FrameExtractor: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         guard connection.isVideoOrientationSupported else { return }
         guard connection.isVideoMirroringSupported else { return }
         connection.videoOrientation = .portrait
-        connection.isVideoMirrored = FrameExtractor.position == .front
+        connection.isVideoMirrored = FrameExtractor.POSITION == .front
     }
     
     private func selectCaptureDevice() -> AVCaptureDevice? {
@@ -112,7 +194,7 @@ class FrameExtractor: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     private func applyFilter(ciImage: CIImage) -> CGImage {
         var cgImage: CGImage!
         
-        switch (filterList[filterStage]) {
+        switch filterList[filterStage] {
         case "none":
             cgImage = context.createCGImage(ciImage, from: ciImage.extent)!
             break
@@ -233,7 +315,7 @@ class FrameExtractor: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
             scale = FrameExtractor.MAX_SCALE
         }
         
-        print(zoomFactor * (FrameExtractor.MAX_SCALE / scale))
+        print(zoomFactor * (FrameExtractor.MAX_SCALE / scale), (FrameExtractor.MAX_SCALE / scale), zoomFactor)
         
         do {
             try self.captureDevice?.lockForConfiguration()
