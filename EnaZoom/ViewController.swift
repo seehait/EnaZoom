@@ -12,15 +12,17 @@ class ViewController: UIViewController, FrameExtractorDelegate {
     @IBOutlet weak var imageView: UIImageView!
 
     var frameExtractor: FrameExtractor!
-    var photoHandler: PhotoHandler!
+    // var photoHandler: PhotoHandler!
+    
+    var isPause = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         frameExtractor = FrameExtractor()
         frameExtractor.delegate = self
         
-        photoHandler = PhotoHandler()
-        
+        // photoHandler = PhotoHandler()
+        /*
         let singleTap = UITapGestureRecognizer(target: self, action: #selector(singleTapped))
         singleTap.numberOfTapsRequired = 1
         
@@ -37,16 +39,49 @@ class ViewController: UIViewController, FrameExtractorDelegate {
         view.addGestureRecognizer(singleTap)
         view.addGestureRecognizer(doubleTap)
         view.addGestureRecognizer(tripleTap)
-        
+        */
         // view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(panned)))
     }
     
     func captured(image: UIImage) {
-        imageView.image = image
+        if (isPause) {
+            
+        } else {
+            imageView.image = image
+        }
     }
     
+    private func togglePause() {
+        isPause = !isPause
+    }
+    
+    @IBAction func topLeftTouched(_ sender: UIButton) {
+        print("Top Left Touched")
+        
+        frameExtractor.toggleTorch()
+    }
+    
+    @IBAction func topRightTouched(_ sender: UIButton) {
+        print("Top Right Touched")
+        
+        frameExtractor.nextFilter()
+    }
+    
+    @IBAction func bottomLeftTouched(_ sender: UIButton) {
+        print("Bottom Left Touched")
+        
+        togglePause()
+    }
+    
+    @IBAction func bottomRightTouched(_ sender: UIButton) {
+        print("Bottom Right Touched")
+        
+        frameExtractor.zoom()
+    }
+    
+    /*
     func singleTapped() {
-        photoHandler.saveScreenshot()
+        frameExtractor.zoom()
     }
     
     func doubleTapped() {
@@ -56,6 +91,7 @@ class ViewController: UIViewController, FrameExtractorDelegate {
     func tripleTapped() {
         frameExtractor.toggleTorch()
     }
+    */
     
     /*
      func panned(gesture: UIPanGestureRecognizer) {

@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -24,13 +25,53 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7Zm-4d-QE7">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1ao-Co-29v">
+                                <rect key="frame" x="0.0" y="0.0" width="187.5" height="333.5"/>
+                                <connections>
+                                    <action selector="topLeftTouched:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wFh-DF-HIi"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D8B-zx-aMj">
+                                <rect key="frame" x="187.5" y="0.0" width="187.5" height="333.5"/>
+                                <connections>
+                                    <action selector="topRightTouched:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aTF-G1-1cW"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nr5-im-UH4">
+                                <rect key="frame" x="0.0" y="333.5" width="187.5" height="333.5"/>
+                                <connections>
+                                    <action selector="bottomLeftTouched:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9BQ-iP-pod"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ul4-fo-C7b">
+                                <rect key="frame" x="187.5" y="333.5" width="187.5" height="333.5"/>
+                                <connections>
+                                    <action selector="bottomRightTouched:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kqT-pZ-YXa"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="1ao-Co-29v" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.5" id="57t-0s-Osi"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Nr5-im-UH4" secondAttribute="bottom" id="7Ld-2J-OI7"/>
                             <constraint firstItem="7Zm-4d-QE7" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="GM3-xv-M15"/>
+                            <constraint firstItem="D8B-zx-aMj" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="GgJ-hm-rdw"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="7Zm-4d-QE7" secondAttribute="bottom" id="Hgp-iM-buw"/>
+                            <constraint firstItem="Nr5-im-UH4" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Iaq-It-9rK"/>
+                            <constraint firstItem="Nr5-im-UH4" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.5" id="Mp2-BR-abn"/>
+                            <constraint firstItem="D8B-zx-aMj" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.5" id="Oxg-3b-4o2"/>
+                            <constraint firstItem="Nr5-im-UH4" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.5" id="PmG-xK-dWp"/>
+                            <constraint firstItem="D8B-zx-aMj" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.5" id="X2a-sN-39Y"/>
+                            <constraint firstItem="Ul4-fo-C7b" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.5" id="b5T-EJ-pkH"/>
                             <constraint firstAttribute="trailing" secondItem="7Zm-4d-QE7" secondAttribute="trailing" id="bqI-a9-X7p"/>
+                            <constraint firstItem="1ao-Co-29v" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="cAY-1D-w3o"/>
+                            <constraint firstItem="Ul4-fo-C7b" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.5" id="cXc-UG-ZTT"/>
+                            <constraint firstAttribute="trailing" secondItem="Ul4-fo-C7b" secondAttribute="trailing" id="hb1-Jh-EPy"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Ul4-fo-C7b" secondAttribute="bottom" id="jOt-m9-G7n"/>
                             <constraint firstItem="7Zm-4d-QE7" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="oxe-ON-qDI"/>
+                            <constraint firstItem="1ao-Co-29v" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="pGy-MM-UCi"/>
+                            <constraint firstAttribute="trailing" secondItem="D8B-zx-aMj" secondAttribute="trailing" id="pSj-g9-obr"/>
+                            <constraint firstItem="1ao-Co-29v" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.5" id="reS-dr-DQw"/>
                         </constraints>
                     </view>
                     <connections>
@@ -39,7 +80,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="117.59999999999999" y="123.68815592203899"/>
+            <point key="canvasLocation" x="110" y="129"/>
         </scene>
     </scenes>
 </document>

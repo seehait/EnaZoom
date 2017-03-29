@@ -15,13 +15,15 @@ protocol FrameExtractorDelegate: class {
 
 class FrameExtractor: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     
-    
-    
-    private let position = AVCaptureDevicePosition.back
-    private let quality = AVCaptureSessionPreset3840x2160
-    private let MAX_WIDTH = CGFloat(2160)
-    private let MAX_HEIGHT = CGFloat(3840)
-    private let SCALE = CGFloat(4)
+    static let position = AVCaptureDevicePosition.back
+    static let quality = AVCaptureSessionPreset3840x2160
+    static let MAX_WIDTH = CGFloat(2160)
+    static let MAX_HEIGHT = CGFloat(3840)
+
+    static let MAX_ZOOM_FACTOR = 16.0
+    static let MIN_ZOOM_FACTOR = 1.0
+    static let MAX_SCALE = 4.0
+    static let MIN_SCALE = 1.0
     
     private var permissionGranted = false
     private let sessionQueue = DispatchQueue(label: "session queue")
@@ -29,33 +31,38 @@ class FrameExtractor: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     private let context = CIContext()
     private var captureDevice: AVCaptureDevice?
     private var filterStage = 0
-    private var filterList = ["none", "CIColorInvert", "CIColorPosterize", "CIFalseColor0", "CIFalseColor1", "CIPhotoEffectNoir"]
+    private var filterList = ["none", "CIColorInvert", "CIPhotoEffectNoir", "CIFalseColor0", "CIFalseColor1"]
     
     private var positionX = CGFloat(0)
     private var positionY = CGFloat(0)
+    
+    private var zoomFactor = 1.0
+    private var scale = FrameExtractor.MAX_SCALE
     
     weak var delegate: FrameExtractorDelegate?
     
     override init() {
         super.init()
-        positionX = CGFloat((MAX_WIDTH / 2) - ((SCALE / 2) * UIScreen.main.bounds.width))
-        positionY = CGFloat((MAX_HEIGHT / 2) - ((SCALE / 2) * UIScreen.main.bounds.height))
+        calculatePosition()
+        
         checkPermission()
         sessionQueue.async { [unowned self] in
             self.configureSession()
             self.captureSession.startRunning()
             
+            /*
             do {
                 try self.captureDevice?.lockForConfiguration()
                 defer {self.captureDevice?.unlockForConfiguration()}
-                
-                self.captureDevice?.videoZoomFactor = CGFloat(8.0)
+             
+                self.captureDevice?.videoZoomFactor = CGFloat(self.zoomFactor)
                 if (self.captureDevice?.hasTorch)! {
                     self.captureDevice?.torchMode = AVCaptureTorchMode.on
                 }
             } catch {
                 
             }
+            */
         }
     }
     
@@ -81,19 +88,9 @@ class FrameExtractor: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     
     private func configureSession() {
         guard permissionGranted else { return }
-        captureSession.sessionPreset = quality
+        captureSession.sessionPreset = FrameExtractor.quality
         guard let captureDevice = selectCaptureDevice() else { return }
         self.captureDevice = captureDevice
-        do {
-            try captureDevice.lockForConfiguration()
-            defer {captureDevice.unlockForConfiguration()}
-            
-            if captureDevice.hasTorch {
-                captureDevice.torchMode = AVCaptureTorchMode.on
-            }
-        } catch {
-            
-        }
         guard let captureDeviceInput = try? AVCaptureDeviceInput(device: captureDevice) else { return }
         guard captureSession.canAddInput(captureDeviceInput) else { return }
         captureSession.addInput(captureDeviceInput)
@@ -105,30 +102,15 @@ class FrameExtractor: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         guard connection.isVideoOrientationSupported else { return }
         guard connection.isVideoMirroringSupported else { return }
         connection.videoOrientation = .portrait
-        connection.isVideoMirrored = position == .front
+        connection.isVideoMirrored = FrameExtractor.position == .front
     }
     
     private func selectCaptureDevice() -> AVCaptureDevice? {
-        /*return AVCaptureDevice.devices().filter {
-         ($0 as AnyObject).hasMediaType(AVMediaTypeVideo) &&
-         ($0 as AnyObject).position == position
-         }.first as? AVCaptureDevice*/
         return AVCaptureDevice.defaultDevice(withDeviceType: .builtInWideAngleCamera, mediaType: AVMediaTypeVideo, position: .back)
     }
     
-    // MARK: Sample buffer to UIImage conversion
-    private func imageFromSampleBuffer(sampleBuffer: CMSampleBuffer) -> UIImage? {
-        guard let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return nil }
-        let ciImage = CIImage(cvPixelBuffer: imageBuffer)
-        
+    private func applyFilter(ciImage: CIImage) -> CGImage {
         var cgImage: CGImage!
-        
-        // Unsharp Mask
-        /*
-        let usmFilter = CIFilter(name: "CIUnsharpMask")
-        usmFilter!.setValue(ciImage, forKey: kCIInputImageKey)
-        cgImage = context.createCGImage(usmFilter!.value(forKey: kCIOutputImageKey) as! CIImage!, from: ciImage.extent)!
-         */
         
         switch (filterList[filterStage]) {
         case "none":
@@ -158,22 +140,42 @@ class FrameExtractor: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
             break
         }
         
-        /*
-         let imgWidth = cgImage.width
-         let imgHeight = cgImage.height
-         */
+        return cgImage
+    }
+    
+    private func cropImage(cgImage: CGImage) -> CGImage {
+        calculatePosition()
         
         let screenSize: CGRect = UIScreen.main.bounds
         let screenWidth = screenSize.width
         let screenHeight = screenSize.height
         
-        let cropingRect: CGRect = CGRect(x: positionX, y: positionY, width: SCALE * screenWidth, height: SCALE * screenHeight)
+        let cropingRect: CGRect = CGRect(x: positionX, y: positionY, width: CGFloat(scale) * screenWidth, height: CGFloat(scale) * screenHeight)
         let cropedImage: CGImage = cgImage.cropping(to: cropingRect)!
         
+        return cropedImage
+    }
+    
+    private func calculatePosition() {
+        positionX = CGFloat((FrameExtractor.MAX_WIDTH / 2) - ((CGFloat(scale) / 2) * UIScreen.main.bounds.width))
+        positionY = CGFloat((FrameExtractor.MAX_HEIGHT / 2) - ((CGFloat(scale) / 2) * UIScreen.main.bounds.height))
+    }
+    
+    // MARK: Sample buffer to UIImage conversion
+    private func imageFromSampleBuffer(sampleBuffer: CMSampleBuffer) -> UIImage? {
+        guard let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return nil }
+        let ciImage = CIImage(cvPixelBuffer: imageBuffer)
+        
+        // Unsharp Mask
+        /*
+        let usmFilter = CIFilter(name: "CIUnsharpMask")
+        usmFilter!.setValue(ciImage, forKey: kCIInputImageKey)
+        cgImage = context.createCGImage(usmFilter!.value(forKey: kCIOutputImageKey) as! CIImage!, from: ciImage.extent)!
+         */
+        
+        let cgImage = applyFilter(ciImage: ciImage)
+        let cropedImage = cropImage(cgImage: cgImage)
         let uiImage = UIImage(cgImage: cropedImage)
-        
-        
-        // let uiImage = UIImage(cgImage: cgImage)
         
         return uiImage
     }
@@ -187,28 +189,17 @@ class FrameExtractor: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     }
     
     func nextFilter() {
-        if (filterStage + 1 >= filterList.count) {
-            filterStage = 0
-        } else {
-            filterStage = filterStage + 1
-            
-        }
+        filterStage = (filterStage + 1 >= filterList.count) ? 0 : filterStage + 1
     }
     
     func prevFilter() {
-        if (filterStage - 1 < 0) {
-            filterStage = filterList.count - 1
-        } else {
-            filterStage = filterStage - 1
-        }
+        filterStage = (filterStage - 1 < 0) ? filterList.count - 1 : filterStage - 1
     }
     
     func toggleTorch() {
         do {
             try self.captureDevice?.lockForConfiguration()
             defer {self.captureDevice?.unlockForConfiguration()}
-            
-            self.captureDevice?.videoZoomFactor = CGFloat(16.0)
             if (self.captureDevice?.hasTorch)! {
                 self.captureDevice?.torchMode = (self.captureDevice?.torchMode == AVCaptureTorchMode.on) ? AVCaptureTorchMode.off : AVCaptureTorchMode.on
             }
@@ -221,14 +212,36 @@ class FrameExtractor: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         let newX = positionX - x
         let newY = positionY - y
         
-        if (newX >= 0 && newX < (MAX_WIDTH - (SCALE * UIScreen.main.bounds.width)) - 1) {
+        if (newX >= 0 && newX < (FrameExtractor.MAX_WIDTH - (CGFloat(scale) * UIScreen.main.bounds.width)) - 1) {
             positionX = newX
         }
         
-        if (newY >= 0 && newY < (MAX_HEIGHT - (SCALE * UIScreen.main.bounds.height)) - 1) {
+        if (newY >= 0 && newY < (FrameExtractor.MAX_HEIGHT - (CGFloat(scale) * UIScreen.main.bounds.height)) - 1) {
             positionY = newY
         }
         
         print(positionX, positionY)
+    }
+    
+    func zoom() {
+        if (scale > FrameExtractor.MIN_SCALE) {
+            scale /= 2
+        } else if (zoomFactor < FrameExtractor.MAX_ZOOM_FACTOR) {
+            zoomFactor *= 2
+        } else {
+            zoomFactor = FrameExtractor.MIN_ZOOM_FACTOR
+            scale = FrameExtractor.MAX_SCALE
+        }
+        
+        print(zoomFactor * (FrameExtractor.MAX_SCALE / scale))
+        
+        do {
+            try self.captureDevice?.lockForConfiguration()
+            defer {self.captureDevice?.unlockForConfiguration()}
+            
+            self.captureDevice?.videoZoomFactor = CGFloat(zoomFactor)
+        } catch {
+            
+        }
     }
 }
