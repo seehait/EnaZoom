@@ -522,6 +522,7 @@
 				D5D01B5F1E8ABD8B00A1AF25 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D5D01B601E8ABD8B00A1AF25 /* Build configuration list for PBXNativeTarget "EnaZoomTests" */ = {
 			isa = XCConfigurationList;
@@ -530,6 +531,7 @@
 				D5D01B621E8ABD8B00A1AF25 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D5D01B631E8ABD8B00A1AF25 /* Build configuration list for PBXNativeTarget "EnaZoomUITests" */ = {
 			isa = XCConfigurationList;
@@ -538,6 +540,7 @@
 				D5D01B651E8ABD8B00A1AF25 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

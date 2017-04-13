@@ -9,8 +9,19 @@
 import UIKit
 
 class ViewController: UIViewController, FrameExtractorDelegate {
+    static let ZOOM_TEXT = "Zoom In"
+    static let HOLD_TEXT = "Hold"
+    static let FILTER_TEXT = "Change Filter"
+    static let TORCH_TEXT = "Toggle Torch"
+    
+    static let ZOOM_COLOR = UIColor(red: 178/255.0, green: 2/255.0, blue: 0/255.0, alpha: 1)
+    static let HOLD_COLOR = UIColor(red: 0/255.0, green: 178/255.0, blue: 56/255.0, alpha: 1)
+    static let FILTER_COLOR = UIColor(red: 0/255.0, green: 21/255.0, blue: 255/255.0, alpha: 1)
+    static let TORCH_COLOR = UIColor(red: 255/255.0, green: 199/255.0, blue: 0/255.0, alpha: 1)
+    
     @IBOutlet weak var imageView: UIImageView!
-
+    @IBOutlet weak var guideBox: UILabel!
+    
     var frameExtractor: FrameExtractor!
     // var photoHandler: PhotoHandler!
     
@@ -55,28 +66,104 @@ class ViewController: UIViewController, FrameExtractorDelegate {
         isPause = !isPause
     }
     
+    private func showGuideBox(text: String, color: UIColor) {
+        if UIDevice.current.orientation == UIDeviceOrientation.landscapeRight {
+            guideBox.transform = CGAffineTransform(rotationAngle: -CGFloat.pi / 2)
+        } else {
+            guideBox.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2)
+        }
+                
+        guideBox.text = text
+        guideBox.backgroundColor = color
+    }
+    
+    private func hideGuideBox() {
+        guideBox.text = ""
+        guideBox.backgroundColor = UIColor.black.withAlphaComponent(0)
+    }
+    
     @IBAction func topLeftTouched(_ sender: UIButton) {
-        print("Top Left Touched")
-        
-        frameExtractor.toggleTorch()
+        if UIDevice.current.orientation == UIDeviceOrientation.landscapeRight {
+            frameExtractor.zoom()
+        } else {
+            frameExtractor.toggleTorch()
+        }
     }
     
     @IBAction func topRightTouched(_ sender: UIButton) {
-        print("Top Right Touched")
-        
-        frameExtractor.nextFilter()
+        if UIDevice.current.orientation == UIDeviceOrientation.landscapeRight {
+            togglePause()
+        } else {
+            frameExtractor.nextFilter()
+        }
     }
     
     @IBAction func bottomLeftTouched(_ sender: UIButton) {
-        print("Bottom Left Touched")
-        
-        togglePause()
+        if UIDevice.current.orientation == UIDeviceOrientation.landscapeRight {
+            frameExtractor.nextFilter()
+        } else {
+            togglePause()
+        }
     }
     
     @IBAction func bottomRightTouched(_ sender: UIButton) {
-        print("Bottom Right Touched")
-        
-        frameExtractor.zoom()
+        if UIDevice.current.orientation == UIDeviceOrientation.landscapeRight {
+            frameExtractor.toggleTorch()
+        } else {
+            frameExtractor.zoom()
+        }
+    }
+    
+    @IBAction func topLeftLongPressed(_ sender: UILongPressGestureRecognizer) {
+        if sender.state == UIGestureRecognizerState.began {
+            if UIDevice.current.orientation == UIDeviceOrientation.landscapeRight {
+                showGuideBox(text: ViewController.ZOOM_TEXT, color: ViewController.ZOOM_COLOR)
+            } else {
+                showGuideBox(text: ViewController.TORCH_TEXT, color: ViewController.TORCH_COLOR)
+            }
+        }
+        else if sender.state == UIGestureRecognizerState.ended {
+            hideGuideBox()
+        }
+    }
+    
+    @IBAction func topRightLongPressed(_ sender: UILongPressGestureRecognizer) {
+        if sender.state == UIGestureRecognizerState.began {
+            if UIDevice.current.orientation == UIDeviceOrientation.landscapeRight {
+                showGuideBox(text: ViewController.HOLD_TEXT, color: ViewController.HOLD_COLOR)
+            } else {
+                showGuideBox(text: ViewController.FILTER_TEXT, color: ViewController.FILTER_COLOR)
+            }
+        }
+        else if sender.state == UIGestureRecognizerState.ended {
+            hideGuideBox()
+        }
+    }
+    
+    @IBAction func bottomLeftLongPressed(_ sender: UILongPressGestureRecognizer) {
+        if sender.state == UIGestureRecognizerState.began {
+            if UIDevice.current.orientation == UIDeviceOrientation.landscapeRight {
+                showGuideBox(text: ViewController.FILTER_TEXT, color: ViewController.FILTER_COLOR)
+            } else {
+                showGuideBox(text: ViewController.HOLD_TEXT, color: ViewController.HOLD_COLOR)
+            }
+        }
+        else if sender.state == UIGestureRecognizerState.ended {
+            hideGuideBox()
+        }
+    }
+    
+    @IBAction func bottomRightLongPressed(_ sender: UILongPressGestureRecognizer) {
+        if sender.state == UIGestureRecognizerState.began {
+            if UIDevice.current.orientation == UIDeviceOrientation.landscapeRight {
+                showGuideBox(text: ViewController.TORCH_TEXT, color: ViewController.TORCH_COLOR)
+            } else {
+                showGuideBox(text: ViewController.ZOOM_TEXT, color: ViewController.ZOOM_COLOR)
+            }
+        }
+        else if sender.state == UIGestureRecognizerState.ended {
+            hideGuideBox()
+        }
     }
     
     /*
