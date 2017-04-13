@@ -22,6 +22,15 @@ class ViewController: UIViewController, FrameExtractorDelegate {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var guideBox: UILabel!
     
+    @IBOutlet weak var topLeftBorder: UIView!
+    @IBOutlet weak var topRightBorder: UIView!
+    @IBOutlet weak var leftTopBorder: UIView!
+    @IBOutlet weak var rightTopBorder: UIView!
+    @IBOutlet weak var leftBottomBorder: UIView!
+    @IBOutlet weak var rightBottomBorder: UIView!
+    @IBOutlet weak var bottomLeftBorder: UIView!
+    @IBOutlet weak var bottomRightBorder: UIView!
+    
     var frameExtractor: FrameExtractor!
     // var photoHandler: PhotoHandler!
     
@@ -32,6 +41,7 @@ class ViewController: UIViewController, FrameExtractorDelegate {
         frameExtractor = FrameExtractor()
         frameExtractor.delegate = self
         
+        NotificationCenter.default.addObserver(self, selector: #selector(deviceOrientationDidChange), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
         // photoHandler = PhotoHandler()
         /*
         let singleTap = UITapGestureRecognizer(target: self, action: #selector(singleTapped))
@@ -54,6 +64,42 @@ class ViewController: UIViewController, FrameExtractorDelegate {
         // view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(panned)))
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        get {
+            return true
+        }
+    }
+    
+    func deviceOrientationDidChange() {
+        if UIDevice.current.orientation == UIDeviceOrientation.landscapeRight {
+            guideBox.transform = CGAffineTransform(rotationAngle: -CGFloat.pi / 2)
+            
+            topLeftBorder.backgroundColor = ViewController.ZOOM_COLOR
+            topRightBorder.backgroundColor = ViewController.HOLD_COLOR
+            leftTopBorder.backgroundColor = ViewController.ZOOM_COLOR
+            rightTopBorder.backgroundColor = ViewController.HOLD_COLOR
+            leftBottomBorder.backgroundColor = ViewController.FILTER_COLOR
+            rightBottomBorder.backgroundColor = ViewController.TORCH_COLOR
+            bottomLeftBorder.backgroundColor = ViewController.FILTER_COLOR
+            bottomRightBorder.backgroundColor = ViewController.TORCH_COLOR
+        } else {
+            guideBox.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2)
+            
+            topLeftBorder.backgroundColor = ViewController.TORCH_COLOR
+            topRightBorder.backgroundColor = ViewController.FILTER_COLOR
+            leftTopBorder.backgroundColor = ViewController.TORCH_COLOR
+            rightTopBorder.backgroundColor = ViewController.FILTER_COLOR
+            leftBottomBorder.backgroundColor = ViewController.HOLD_COLOR
+            rightBottomBorder.backgroundColor = ViewController.ZOOM_COLOR
+            bottomLeftBorder.backgroundColor = ViewController.HOLD_COLOR
+            bottomRightBorder.backgroundColor = ViewController.ZOOM_COLOR
+        }
+    }
+    
     func captured(image: UIImage) {
         if (isPause) {
             
@@ -67,12 +113,6 @@ class ViewController: UIViewController, FrameExtractorDelegate {
     }
     
     private func showGuideBox(text: String, color: UIColor) {
-        if UIDevice.current.orientation == UIDeviceOrientation.landscapeRight {
-            guideBox.transform = CGAffineTransform(rotationAngle: -CGFloat.pi / 2)
-        } else {
-            guideBox.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2)
-        }
-                
         guideBox.text = text
         guideBox.backgroundColor = color
     }

@@ -39,10 +39,7 @@ class PhotoHandler: NSObject {
     func requestAuthorizationHandler(status: PHAuthorizationStatus) {
         if PHPhotoLibrary.authorizationStatus() == PHAuthorizationStatus.authorized {
             // ideally this ensures the creation of the photo album even if authorization wasn't prompted till after init was done
-            print("trying again to create the album")
             self.createAlbum()
-        } else {
-            print("should really prompt the user to let them know it's failed")
         }
     }
     
@@ -53,7 +50,7 @@ class PhotoHandler: NSObject {
             if success {
                 self.assetCollection = self.fetchAssetCollectionForAlbum()
             } else {
-                print("error \(error)")
+                print("error \(String(describing: error))")
             }
         }
     }

@@ -143,9 +143,6 @@ class FrameExtractor: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
             scale = 4
             break;
         }
-        
-        print(FrameExtractor.QUALITY)
-        print(zoomFactor * (FrameExtractor.MAX_SCALE / scale), (FrameExtractor.MAX_SCALE / scale), zoomFactor)
     }
     
     // MARK: AVSession configuration
@@ -300,10 +297,7 @@ class FrameExtractor: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         
         if (newY >= 0 && newY < (FrameExtractor.MAX_HEIGHT - (CGFloat(scale) * UIScreen.main.bounds.height)) - 1) {
             positionY = newY
-        }
-        
-        print(positionX, positionY)
-    }
+        }    }
     
     func zoom() {
         if (scale > FrameExtractor.MIN_SCALE) {
@@ -314,8 +308,6 @@ class FrameExtractor: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
             zoomFactor = FrameExtractor.MIN_ZOOM_FACTOR
             scale = FrameExtractor.MAX_SCALE
         }
-        
-        print(zoomFactor * (FrameExtractor.MAX_SCALE / scale), (FrameExtractor.MAX_SCALE / scale), zoomFactor)
         
         do {
             try self.captureDevice?.lockForConfiguration()
