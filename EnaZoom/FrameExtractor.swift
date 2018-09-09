@@ -201,7 +201,7 @@ class FrameExtractor: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
             filter!.setValue(CIColor.yellow(), forKey: "inputColor1")
             filter!.setValue(ciImage, forKey: kCIInputImageKey)
             
-            cgImage = context.createCGImage(filter!.value(forKey: kCIOutputImageKey) as! CIImage!, from: ciImage.extent)!
+            cgImage = context.createCGImage(filter!.value(forKey: kCIOutputImageKey) as! CIImage, from: ciImage.extent)!
             break
         case "CIFalseColor1":
             let filter = CIFilter(name: "CIFalseColor")
@@ -209,13 +209,13 @@ class FrameExtractor: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
             filter!.setValue(CIColor.blue(), forKey: "inputColor1")
             filter!.setValue(ciImage, forKey: kCIInputImageKey)
             
-            cgImage = context.createCGImage(filter!.value(forKey: kCIOutputImageKey) as! CIImage!, from: ciImage.extent)!
+            cgImage = context.createCGImage(filter!.value(forKey: kCIOutputImageKey) as! CIImage, from: ciImage.extent)!
             break
         default:
             let filter = CIFilter(name: filterList[filterStage])
             filter!.setValue(ciImage, forKey: kCIInputImageKey)
             
-            cgImage = context.createCGImage(filter!.value(forKey: kCIOutputImageKey) as! CIImage!, from: ciImage.extent)!
+            cgImage = context.createCGImage(filter!.value(forKey: kCIOutputImageKey) as! CIImage, from: ciImage.extent)!
             break
         }
         
