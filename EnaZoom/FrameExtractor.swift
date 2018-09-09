@@ -94,20 +94,6 @@ class FrameExtractor: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         sessionQueue.async { [unowned self] in
             self.configureSession()
             self.captureSession.startRunning()
-            
-            /*
-            do {
-                try self.captureDevice?.lockForConfiguration()
-                defer {self.captureDevice?.unlockForConfiguration()}
-             
-                self.captureDevice?.videoZoomFactor = CGFloat(self.zoomFactor)
-                if (self.captureDevice?.hasTorch)! {
-                    self.captureDevice?.torchMode = AVCaptureTorchMode.on
-                }
-            } catch {
-                
-            }
-            */
         }
     }
     
@@ -145,7 +131,6 @@ class FrameExtractor: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         }
     }
     
-    // MARK: AVSession configuration
     private func checkPermission() {
         switch AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) {
         case .authorized:
@@ -245,13 +230,6 @@ class FrameExtractor: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         guard let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return nil }
         let ciImage = CIImage(cvPixelBuffer: imageBuffer)
         
-        // Unsharp Mask
-        /*
-        let usmFilter = CIFilter(name: "CIUnsharpMask")
-        usmFilter!.setValue(ciImage, forKey: kCIInputImageKey)
-        cgImage = context.createCGImage(usmFilter!.value(forKey: kCIOutputImageKey) as! CIImage!, from: ciImage.extent)!
-         */
-        
         let cgImage = applyFilter(ciImage: ciImage)
         let cropedImage = cropImage(cgImage: cgImage)
         let uiImage = UIImage(cgImage: cropedImage)
@@ -259,7 +237,6 @@ class FrameExtractor: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         return uiImage
     }
     
-    // MARK: AVCaptureVideoDataOutputSampleBufferDelegate
     func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, from connection: AVCaptureConnection!) {
         guard let uiImage = imageFromSampleBuffer(sampleBuffer: sampleBuffer) else { return }
         DispatchQueue.main.async { [unowned self] in

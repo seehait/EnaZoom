@@ -38,14 +38,13 @@ class PhotoHandler: NSObject {
     
     func requestAuthorizationHandler(status: PHAuthorizationStatus) {
         if PHPhotoLibrary.authorizationStatus() == PHAuthorizationStatus.authorized {
-            // ideally this ensures the creation of the photo album even if authorization wasn't prompted till after init was done
             self.createAlbum()
         }
     }
     
     func createAlbum() {
         PHPhotoLibrary.shared().performChanges({
-            PHAssetCollectionChangeRequest.creationRequestForAssetCollection(withTitle: PhotoHandler.albumName)   // create an asset collection with the album name
+            PHAssetCollectionChangeRequest.creationRequestForAssetCollection(withTitle: PhotoHandler.albumName)
         }) { success, error in
             if success {
                 self.assetCollection = self.fetchAssetCollectionForAlbum()
@@ -68,7 +67,7 @@ class PhotoHandler: NSObject {
     
     func save(image: UIImage) {
         if assetCollection == nil {
-            return                          // if there was an error upstream, skip the save
+            return
         }
         
         PHPhotoLibrary.shared().performChanges({
@@ -81,8 +80,6 @@ class PhotoHandler: NSObject {
         }, completionHandler: nil)
     }
     
-    
-    
     func saveScreenshot() {
         let layer = UIApplication.shared.keyWindow!.layer
         let scale = UIScreen.main.scale
@@ -92,7 +89,6 @@ class PhotoHandler: NSObject {
         let screenshot = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        // UIImageWriteToSavedPhotosAlbum(screenshot!, nil, nil, nil)
         save(image: screenshot!)
     }
 }
