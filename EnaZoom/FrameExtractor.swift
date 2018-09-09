@@ -59,8 +59,8 @@ public extension UIDevice {
 
 class FrameExtractor: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     
-    static let POSITION = AVCaptureDevicePosition.back
-    static var QUALITY = AVCaptureSessionPreset3840x2160
+    static let POSITION = AVCaptureDevice.Position.back
+    static var QUALITY = convertFromAVCaptureSessionPreset(AVCaptureSession.Preset.hd4K3840x2160)
     static var MAX_WIDTH = CGFloat(2160)
     static var MAX_HEIGHT = CGFloat(3840)
 
@@ -101,28 +101,28 @@ class FrameExtractor: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         let modelName = UIDevice.current.modelName
         switch modelName {
         case "iPhone 4", "iPad 2":
-            FrameExtractor.QUALITY = AVCaptureSessionPreset1280x720
+            FrameExtractor.QUALITY = convertFromAVCaptureSessionPreset(AVCaptureSession.Preset.hd1280x720)
             FrameExtractor.MAX_WIDTH = CGFloat(720)
             FrameExtractor.MAX_HEIGHT = CGFloat(1280)
             FrameExtractor.MAX_SCALE = 1
             scale = 1
             break;
         case "iPhone 4s", "iPhone 5", "iPhone 5c", "iPhone 5s", "iPhone 6", "iPhone 6 Plus", "iPad 3", "iPad 4", "iPad Air", "iPad Air 2", "iPad Mini", "iPad Mini 2", "iPad Mini 3", "iPad Mini 4", "iPad Pro 12.9":
-            FrameExtractor.QUALITY = AVCaptureSessionPreset1920x1080
+            FrameExtractor.QUALITY = convertFromAVCaptureSessionPreset(AVCaptureSession.Preset.hd1920x1080)
             FrameExtractor.MAX_WIDTH = CGFloat(1080)
             FrameExtractor.MAX_HEIGHT = CGFloat(1920)
             FrameExtractor.MAX_SCALE = 2
             scale = 2
             break;
         case "iPhone 6s", "iPhone 6s Plus", "iPhone 7", "iPhone 7 Plus", "iPhone SE", "iPad Pro 9.7":
-            FrameExtractor.QUALITY = AVCaptureSessionPreset3840x2160
+            FrameExtractor.QUALITY = convertFromAVCaptureSessionPreset(AVCaptureSession.Preset.hd4K3840x2160)
             FrameExtractor.MAX_WIDTH = CGFloat(2160)
             FrameExtractor.MAX_HEIGHT = CGFloat(3840)
             FrameExtractor.MAX_SCALE = 4
             scale = 4
             break;
         default :
-            FrameExtractor.QUALITY = AVCaptureSessionPreset3840x2160
+            FrameExtractor.QUALITY = convertFromAVCaptureSessionPreset(AVCaptureSession.Preset.hd4K3840x2160)
             FrameExtractor.MAX_WIDTH = CGFloat(2160)
             FrameExtractor.MAX_HEIGHT = CGFloat(3840)
             FrameExtractor.MAX_SCALE = 4
@@ -132,7 +132,7 @@ class FrameExtractor: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     }
     
     private func checkPermission() {
-        switch AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) {
+        switch AVCaptureDevice.authorizationStatus(for: AVMediaType(rawValue: convertFromAVMediaType(AVMediaType.video))) {
         case .authorized:
             permissionGranted = true
         case .notDetermined:
@@ -144,7 +144,7 @@ class FrameExtractor: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     
     private func requestPermission() {
         sessionQueue.suspend()
-        AVCaptureDevice.requestAccess(forMediaType: AVMediaTypeVideo) { [unowned self] granted in
+        AVCaptureDevice.requestAccess(for: AVMediaType(rawValue:  convertFromAVMediaType(AVMediaType.video))) { [unowned self] granted in
             self.permissionGranted = granted
             self.sessionQueue.resume()
         }
@@ -152,7 +152,7 @@ class FrameExtractor: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     
     private func configureSession() {
         guard permissionGranted else { return }
-        captureSession.sessionPreset = FrameExtractor.QUALITY
+        captureSession.sessionPreset = AVCaptureSession.Preset(rawValue: FrameExtractor.QUALITY)
         guard let captureDevice = selectCaptureDevice() else { return }
         self.captureDevice = captureDevice
         guard let captureDeviceInput = try? AVCaptureDeviceInput(device: captureDevice) else { return }
@@ -162,7 +162,7 @@ class FrameExtractor: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         videoOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "sample buffer"))
         guard captureSession.canAddOutput(videoOutput) else { return }
         captureSession.addOutput(videoOutput)
-        guard let connection = videoOutput.connection(withMediaType: AVFoundation.AVMediaTypeVideo) else { return }
+        guard let connection = videoOutput.connection(with: AVMediaType(rawValue:  convertFromAVMediaType(AVMediaType.video))) else { return }
         guard connection.isVideoOrientationSupported else { return }
         guard connection.isVideoMirroringSupported else { return }
         connection.videoOrientation = .portrait
@@ -170,7 +170,7 @@ class FrameExtractor: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     }
     
     private func selectCaptureDevice() -> AVCaptureDevice? {
-        return AVCaptureDevice.defaultDevice(withDeviceType: .builtInWideAngleCamera, mediaType: AVMediaTypeVideo, position: .back)
+        return AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType(rawValue: convertFromAVMediaType(AVMediaType.video)), position: .back)
     }
     
     private func applyFilter(ciImage: CIImage) -> CGImage {
@@ -182,16 +182,16 @@ class FrameExtractor: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
             break
         case "CIFalseColor0":
             let filter = CIFilter(name: "CIFalseColor")
-            filter!.setValue(CIColor.blue(), forKey: "inputColor0")
-            filter!.setValue(CIColor.yellow(), forKey: "inputColor1")
+            filter!.setValue(CIColor.blue, forKey: "inputColor0")
+            filter!.setValue(CIColor.yellow, forKey: "inputColor1")
             filter!.setValue(ciImage, forKey: kCIInputImageKey)
             
             cgImage = context.createCGImage(filter!.value(forKey: kCIOutputImageKey) as! CIImage, from: ciImage.extent)!
             break
         case "CIFalseColor1":
             let filter = CIFilter(name: "CIFalseColor")
-            filter!.setValue(CIColor.yellow(), forKey: "inputColor0")
-            filter!.setValue(CIColor.blue(), forKey: "inputColor1")
+            filter!.setValue(CIColor.yellow, forKey: "inputColor0")
+            filter!.setValue(CIColor.blue, forKey: "inputColor1")
             filter!.setValue(ciImage, forKey: kCIInputImageKey)
             
             cgImage = context.createCGImage(filter!.value(forKey: kCIOutputImageKey) as! CIImage, from: ciImage.extent)!
@@ -237,7 +237,7 @@ class FrameExtractor: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         return uiImage
     }
     
-    func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, from connection: AVCaptureConnection!) {
+    func captureOutput(_ captureOutput: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         guard let uiImage = imageFromSampleBuffer(sampleBuffer: sampleBuffer) else { return }
         DispatchQueue.main.async { [unowned self] in
             self.delegate?.captured(image: uiImage)
@@ -257,7 +257,7 @@ class FrameExtractor: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
             try self.captureDevice?.lockForConfiguration()
             defer {self.captureDevice?.unlockForConfiguration()}
             if (self.captureDevice?.hasTorch)! {
-                self.captureDevice?.torchMode = (self.captureDevice?.torchMode == AVCaptureTorchMode.on) ? AVCaptureTorchMode.off : AVCaptureTorchMode.on
+                self.captureDevice?.torchMode = (self.captureDevice?.torchMode == AVCaptureDevice.TorchMode.on) ? AVCaptureDevice.TorchMode.off : AVCaptureDevice.TorchMode.on
             }
         } catch {
             
@@ -295,4 +295,14 @@ class FrameExtractor: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
             
         }
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromAVCaptureSessionPreset(_ input: AVCaptureSession.Preset) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromAVMediaType(_ input: AVMediaType) -> String {
+	return input.rawValue
 }

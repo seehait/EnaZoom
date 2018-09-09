@@ -42,7 +42,7 @@ class ViewController: UIViewController, FrameExtractorDelegate {
         frameExtractor = FrameExtractor()
         frameExtractor.delegate = self
         
-        NotificationCenter.default.addObserver(self, selector: #selector(deviceOrientationDidChange), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(deviceOrientationDidChange), name: UIDevice.orientationDidChangeNotification, object: nil)
         
         photoHandler = PhotoHandler()
         
@@ -52,7 +52,7 @@ class ViewController: UIViewController, FrameExtractorDelegate {
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -61,7 +61,7 @@ class ViewController: UIViewController, FrameExtractorDelegate {
         }
     }
     
-    func deviceOrientationDidChange() {
+    @objc func deviceOrientationDidChange() {
         if UIDevice.current.orientation == UIDeviceOrientation.landscapeRight {
             guideBox.transform = CGAffineTransform(rotationAngle: -CGFloat.pi / 2)
             
@@ -142,58 +142,58 @@ class ViewController: UIViewController, FrameExtractorDelegate {
     }
     
     @IBAction func topLeftLongPressed(_ sender: UILongPressGestureRecognizer) {
-        if sender.state == UIGestureRecognizerState.began {
+        if sender.state == UIGestureRecognizer.State.began {
             if UIDevice.current.orientation == UIDeviceOrientation.landscapeRight {
                 showGuideBox(text: ViewController.ZOOM_TEXT, color: ViewController.ZOOM_COLOR)
             } else {
                 showGuideBox(text: ViewController.TORCH_TEXT, color: ViewController.TORCH_COLOR)
             }
         }
-        else if sender.state == UIGestureRecognizerState.ended {
+        else if sender.state == UIGestureRecognizer.State.ended {
             hideGuideBox()
         }
     }
     
     @IBAction func topRightLongPressed(_ sender: UILongPressGestureRecognizer) {
-        if sender.state == UIGestureRecognizerState.began {
+        if sender.state == UIGestureRecognizer.State.began {
             if UIDevice.current.orientation == UIDeviceOrientation.landscapeRight {
                 showGuideBox(text: ViewController.HOLD_TEXT, color: ViewController.HOLD_COLOR)
             } else {
                 showGuideBox(text: ViewController.FILTER_TEXT, color: ViewController.FILTER_COLOR)
             }
         }
-        else if sender.state == UIGestureRecognizerState.ended {
+        else if sender.state == UIGestureRecognizer.State.ended {
             hideGuideBox()
         }
     }
     
     @IBAction func bottomLeftLongPressed(_ sender: UILongPressGestureRecognizer) {
-        if sender.state == UIGestureRecognizerState.began {
+        if sender.state == UIGestureRecognizer.State.began {
             if UIDevice.current.orientation == UIDeviceOrientation.landscapeRight {
                 showGuideBox(text: ViewController.FILTER_TEXT, color: ViewController.FILTER_COLOR)
             } else {
                 showGuideBox(text: ViewController.HOLD_TEXT, color: ViewController.HOLD_COLOR)
             }
         }
-        else if sender.state == UIGestureRecognizerState.ended {
+        else if sender.state == UIGestureRecognizer.State.ended {
             hideGuideBox()
         }
     }
     
     @IBAction func bottomRightLongPressed(_ sender: UILongPressGestureRecognizer) {
-        if sender.state == UIGestureRecognizerState.began {
+        if sender.state == UIGestureRecognizer.State.began {
             if UIDevice.current.orientation == UIDeviceOrientation.landscapeRight {
                 showGuideBox(text: ViewController.TORCH_TEXT, color: ViewController.TORCH_COLOR)
             } else {
                 showGuideBox(text: ViewController.ZOOM_TEXT, color: ViewController.ZOOM_COLOR)
             }
         }
-        else if sender.state == UIGestureRecognizerState.ended {
+        else if sender.state == UIGestureRecognizer.State.ended {
             hideGuideBox()
         }
     }
     
-    func doubleTapped() {
+    @objc func doubleTapped() {
         photoHandler.save(image: imageView!.image!)
     }
 }
